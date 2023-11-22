@@ -10,12 +10,11 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Left click
+        if (Input.GetMouseButtonDown(0)) 
         {
             ShootProjectile();
         }
 
-        // Switch projectile type (example key binds)
         if (Input.GetKeyDown(KeyCode.Alpha1)) currentProjectileType = EProjectileType.Bullet;
         if (Input.GetKeyDown(KeyCode.Alpha2)) currentProjectileType = EProjectileType.Rocket;
         if (Input.GetKeyDown(KeyCode.Alpha3)) currentProjectileType = EProjectileType.Laser;
@@ -23,24 +22,17 @@ public class PlayerShooting : MonoBehaviour
 
     void ShootProjectile()
     {
-        GameObject projectilePrefab = null;
-
-        switch (currentProjectileType)
+        if (currentProjectileType.HasFlag(EProjectileType.Bullet))
         {
-            case EProjectileType.Bullet:
-                projectilePrefab = bulletPrefab;
-                break;
-            case EProjectileType.Rocket:
-                projectilePrefab = rocketPrefab;
-                break;
-            case EProjectileType.Laser:
-                projectilePrefab = laserPrefab;
-                break;
+            Instantiate(bulletPrefab, transform.position, transform.rotation);
         }
-
-        if (projectilePrefab != null)
+        if (currentProjectileType.HasFlag(EProjectileType.Rocket))
         {
-            Instantiate(projectilePrefab, transform.position, transform.rotation);
+            Instantiate(rocketPrefab, transform.position, transform.rotation);
+        }
+        if (currentProjectileType.HasFlag(EProjectileType.Laser))
+        {
+            Instantiate(laserPrefab, transform.position, transform.rotation);
         }
     }
 }
